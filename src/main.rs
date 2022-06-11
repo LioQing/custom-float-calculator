@@ -1,6 +1,6 @@
 pub use yew::prelude::*;
 pub use float_format::*;
-pub use log;
+pub use regex::Regex;
 
 mod components;
 pub use components::*;

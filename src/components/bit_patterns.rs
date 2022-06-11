@@ -2,28 +2,37 @@ use crate::*;
 
 #[derive(Properties, PartialEq)]
 pub struct BitPatternsProps {
-    pub float: UseStateHandle<FloatResult>,
+    pub float: UseStateHandle<Float>,
 }
 
 #[function_component(BitPatterns)]
 pub fn bit_patterns(props: &BitPatternsProps) -> Html {
-    let float = props.float.float();
+    let float = (*props.float).clone();
 
     let comps = float.to_comps();
-    let button_class = "bg-violet-600 hover:bg-violet-800 active:bg-violet-500 text-white font-bold p-2 mx-0.5 rounded";
-    let all_set_class = "bg-gray-200 hover:bg-gray-300 active:bg-gray-100 text-black p-1.5 m-0.5 rounded";
-    let comps_class = "mx-1";
+
+    let button_class = "\
+        bg-gray-600 hover:bg-gray-800 active:bg-gray-500 \
+        text-white font-bold p-2 m-0.5 \
+        rounded drop-shadow-lg";
+
+    let all_set_class = "\
+        bg-gray-100 hover:bg-gray-300 active:bg-gray-50 \
+        text-gray-700 font-medium p-2 m-0.5 \
+        rounded-lg border-2 border-gray-500";
+
+    let comps_class = "mx-2";
 
     // get the callback for button to toggle the n-th bit
     let get_on_toggle = |n: usize| {
         let f = props.float.clone();
         Callback::from(move |_| {
-            f.set(FloatResult::Ok({
-                let mut f = f.float();
+            f.set({
+                let mut f = (*f).clone();
                 let b = !f.bits.get(n).unwrap();
                 f.bits.set(n, b);
                 f
-            }));
+            });
         })
     };
 
@@ -31,12 +40,11 @@ pub fn bit_patterns(props: &BitPatternsProps) -> Html {
     let get_on_all_set = |b: usize| {
         let f = props.float.clone();
         Callback::from(move |_| {
-            f.set(FloatResult::Ok({
-                let mut f = f.float();
+            f.set({
+                let mut f = (*f).clone();
                 f.bits.set_elements(b);
                 f
-            }));
-            log::info!("{:?}", *f);
+            });
         })
     };
 
@@ -46,9 +54,17 @@ pub fn bit_patterns(props: &BitPatternsProps) -> Html {
         <div class="my-4">
             <p class="my-2">
                 <span class={comps_class}>
-                    <button class={button_class} onclick={get_on_toggle(0)}>
-                        { comps.get_sign().unwrap_or_default() }
-                    </button>
+                    {
+                        if comps.sign.is_some() {
+                            html! {
+                                <button class={button_class} onclick={get_on_toggle(0)}>
+                                    { comps.get_sign().unwrap_or_default() }
+                                </button>
+                            }
+                        } else {
+                            html! {}
+                        }
+                    }
                 </span>
                 <span class={comps_class}>
                     { comps.exp
