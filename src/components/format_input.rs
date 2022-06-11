@@ -166,6 +166,7 @@ pub fn format_input(props: &FormatInputProps) -> Html {
                     <span>{ "exponent" }</span><br />
                     <TextBox
                         val={format.exp.to_string()}
+                        err={(*err).clone()}
                         on_focus_out={get_handle_on_focus_out(Component::Exponent)}
                     />
                 </div>
@@ -173,6 +174,7 @@ pub fn format_input(props: &FormatInputProps) -> Html {
                     <span>{ "mantissa" }</span><br />
                     <TextBox
                         val={format.mant.to_string()}
+                        err={(*err).clone()}
                         on_focus_out={get_handle_on_focus_out(Component::Mantissa)}
                     />
                 </div>
@@ -180,6 +182,7 @@ pub fn format_input(props: &FormatInputProps) -> Html {
                     <span>{ "excess" }</span><br />
                     <TextBox
                         val={format.excess.to_string()}
+                        err={(*err).clone()}
                         on_focus_out={get_handle_on_focus_out(Component::Excess)}
                     />
                 </div>

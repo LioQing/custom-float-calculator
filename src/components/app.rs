@@ -1,18 +1,5 @@
 use crate::*;
 
-// fn on_value_change(args: OnFloatChangeArgs) -> FloatResult {
-//     let OnFloatChangeArgs { val, prev } = args;
-
-//     if val.is_empty() {
-//         return FloatResult::ok_zero(prev.format);
-//     }
-
-//     match Float::from_str(prev.format, &val) {
-//         Ok(f) => Ok(f),
-//         Err(e) => Err(e.to_string()),
-//     }
-// }
-
 #[function_component(App)]
 pub fn app() -> Html {
     let float = use_state(|| Float::from_bits(
@@ -27,6 +14,9 @@ pub fn app() -> Html {
             <BitPatterns float={float.clone()} />
             <FormatInput float={float.clone()} />
             <UserInput float={float.clone()} />
+            <BinRep float={float.clone()} />
+            <HexRep float={float.clone()} />
+            <Help />
         </MainContainer>
     }
 }
