@@ -26,7 +26,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Build Tailwind CSS
-        run: npx tailwindcss -i ./input.css -o ./output.css
+        run: |
+          npm install tailwindcss
+          npx tailwindcss -i ./input.css -o ./output.css
 
       - name: Build with Trunk
         run: |
