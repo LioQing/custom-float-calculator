@@ -47,7 +47,7 @@ pub fn hex_rep(props: &HexRepProps) -> Html {
                 return;
             }
 
-            if s.len() != float.format.len() {
+            if s.len() != float.format.len() / 4 {
                 err.set(Some("invalid length".to_owned()));
                 return;
             }
