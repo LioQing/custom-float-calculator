@@ -30,9 +30,12 @@ jobs:
           npm install tailwindcss
           npx tailwindcss -i ./input.css -o ./output.css
 
+      - name: Install Trunk
+        uses: jetli/trunk-action@v0.1.0
+      
       - name: Build with Trunk
         run: |
-          cargo install trunk
+          rustup target add wasm32-unknown-unknown
           trunk build
 
       - name: Deploy to gh-pages
